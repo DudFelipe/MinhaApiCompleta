@@ -18,15 +18,15 @@ namespace DevIO.Data.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(14)");
 
-            //1 : 1 => Fornecedor : Endereco
+            // 1 : 1 => Fornecedor : Endereco
             builder.HasOne(f => f.Endereco)
                 .WithOne(e => e.Fornecedor);
 
-            //1 : N => Fornecedor : Produtos
+            // 1 : N => Fornecedor : Produtos
             builder.HasMany(f => f.Produtos)
                 .WithOne(p => p.Fornecedor)
                 .HasForeignKey(p => p.FornecedorId);
-                
+
             builder.ToTable("Fornecedores");
         }
     }

@@ -1,4 +1,4 @@
-﻿using DevIO.Business.Interfaces;
+﻿using DevIO.Business.Intefaces;
 using DevIO.Business.Models;
 using DevIO.Business.Notificacoes;
 using FluentValidation;
@@ -17,7 +17,10 @@ namespace DevIO.Business.Services
 
         protected void Notificar(ValidationResult validationResult)
         {
-            validationResult.Errors.ForEach(e => Notificar(e.ErrorMessage));
+            foreach (var error in validationResult.Errors)
+            {
+                Notificar(error.ErrorMessage);
+            }
         }
 
         protected void Notificar(string mensagem)
@@ -25,16 +28,11 @@ namespace DevIO.Business.Services
             _notificador.Handle(new Notificacao(mensagem));
         }
 
-        //TV - Validacao Generica
-        //TE - Entidade Generica
         protected bool ExecutarValidacao<TV, TE>(TV validacao, TE entidade) where TV : AbstractValidator<TE> where TE : Entity
         {
             var validator = validacao.Validate(entidade);
 
-            if (validator.IsValid)
-            {
-                return true;
-            }
+            if(validator.IsValid) return true;
 
             Notificar(validator);
 

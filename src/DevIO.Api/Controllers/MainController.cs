@@ -1,4 +1,4 @@
-﻿using DevIO.Business.Interfaces;
+﻿using DevIO.Business.Intefaces;
 using DevIO.Business.Notificacoes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -34,28 +34,23 @@ namespace DevIO.Api.Controllers
             return BadRequest(new
             {
                 success = false,
-                errors = _notificador.ObterNotificacoes().Select(n => n.Mensagem)
+                errors = _notificador.ObterNotificacoes().Select(m => m.Mensagem)
             });
         }
 
         protected ActionResult CustomResponse(ModelStateDictionary modelState)
         {
-            if(!modelState.IsValid)
-            {
-                NotificarErroModelInvalida(modelState);
-            }
-
+            if(!modelState.IsValid) NotificarErroModelInvalida(modelState);
+            
             return CustomResponse();
         }
 
         protected void NotificarErroModelInvalida(ModelStateDictionary modelState)
         {
             var erros = modelState.Values.SelectMany(e => e.Errors);
-
-            foreach(var erro in erros)
+            foreach (var erro in erros)
             {
                 var errorMsg = erro.Exception == null ? erro.ErrorMessage : erro.Exception.Message;
-
                 NotificarErro(errorMsg);
             }
         }

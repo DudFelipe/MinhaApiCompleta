@@ -1,4 +1,4 @@
-﻿using DevIO.Business.Interfaces;
+﻿using DevIO.Business.Intefaces;
 
 namespace DevIO.Business.Notificacoes
 {

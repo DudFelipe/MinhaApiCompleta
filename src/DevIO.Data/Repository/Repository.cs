@@ -1,9 +1,8 @@
-﻿using DevIO.Business.Interfaces;
-using DevIO.Business.Interfaces.Repositories;
+﻿using System.Linq.Expressions;
+using DevIO.Business.Intefaces;
 using DevIO.Business.Models;
 using DevIO.Data.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace DevIO.Data.Repository
 {
@@ -12,7 +11,7 @@ namespace DevIO.Data.Repository
         protected readonly MeuDbContext Db;
         protected readonly DbSet<TEntity> DbSet;
 
-        public Repository(MeuDbContext db)
+        protected Repository(MeuDbContext db)
         {
             Db = db;
             DbSet = db.Set<TEntity>();
@@ -41,14 +40,13 @@ namespace DevIO.Data.Repository
 
         public virtual async Task Atualizar(TEntity entity)
         {
-            Db.Entry(entity).State = EntityState.Modified;
             DbSet.Update(entity);
             await SaveChanges();
         }
 
         public virtual async Task Remover(Guid id)
         {
-            DbSet.Remove(new TEntity { Id = id});
+            DbSet.Remove(new TEntity { Id = id });
             await SaveChanges();
         }
 

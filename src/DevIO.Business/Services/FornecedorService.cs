@@ -1,6 +1,4 @@
-﻿using DevIO.Business.Interfaces;
-using DevIO.Business.Interfaces.Repositories;
-using DevIO.Business.Interfaces.Services;
+﻿using DevIO.Business.Intefaces;
 using DevIO.Business.Models;
 using DevIO.Business.Models.Validations;
 
@@ -21,49 +19,36 @@ namespace DevIO.Business.Services
 
         public async Task<bool> Adicionar(Fornecedor fornecedor)
         {
-            //Validar o estado da entidade
-            if (!ExecutarValidacao(new FornecedorValidation(), fornecedor) || 
-                    !ExecutarValidacao(new EnderecoValidation(), fornecedor.Endereco))
-            {
-                return false;
-            }
+            if (!ExecutarValidacao(new FornecedorValidation(), fornecedor) 
+                || !ExecutarValidacao(new EnderecoValidation(), fornecedor.Endereco)) return false;
 
-            //Validar se já existe um fornecedor com esse documento
             if (_fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento).Result.Any())
             {
-                Notificar("Já existe um fornecedor com este documento.");
+                Notificar("Já existe um fornecedor com este documento informado.");
                 return false;
             }
 
             await _fornecedorRepository.Adicionar(fornecedor);
-
             return true;
         }
 
         public async Task<bool> Atualizar(Fornecedor fornecedor)
         {
-            if(!ExecutarValidacao(new FornecedorValidation(), fornecedor))
-            {
-                return false;
-            }
+            if (!ExecutarValidacao(new FornecedorValidation(), fornecedor)) return false;
 
             if (_fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento && f.Id != fornecedor.Id).Result.Any())
             {
-                Notificar("Já existe um fornecedor com este documento.");
+                Notificar("Já existe um fornecedor com este documento infomado.");
                 return false;
             }
 
             await _fornecedorRepository.Atualizar(fornecedor);
-
             return true;
         }
 
         public async Task AtualizarEndereco(Endereco endereco)
         {
-            if(!ExecutarValidacao(new EnderecoValidation(), endereco))
-            {
-                return;
-            }
+            if (!ExecutarValidacao(new EnderecoValidation(), endereco)) return;
 
             await _enderecoRepository.Atualizar(endereco);
         }
@@ -78,13 +63,12 @@ namespace DevIO.Business.Services
 
             var endereco = await _enderecoRepository.ObterEnderecoPorFornecedor(id);
 
-            if(endereco != null)
+            if (endereco != null)
             {
                 await _enderecoRepository.Remover(endereco.Id);
             }
 
             await _fornecedorRepository.Remover(id);
-
             return true;
         }
 

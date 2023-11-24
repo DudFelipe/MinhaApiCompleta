@@ -2,11 +2,11 @@
 {
     public class Notificacao
     {
-        public string Mensagem { get; }
-
         public Notificacao(string mensagem)
         {
             Mensagem = mensagem;
         }
+
+        public string Mensagem { get; }
     }
 }

@@ -1,27 +1,26 @@
-﻿using DevIO.Business.Interfaces;
-using DevIO.Business.Interfaces.Repositories;
-using DevIO.Business.Interfaces.Services;
+﻿using DevIO.Business.Intefaces;
 using DevIO.Business.Notificacoes;
 using DevIO.Business.Services;
 using DevIO.Data.Context;
 using DevIO.Data.Repository;
 
-namespace DevIO.Api.Configuration
+namespace DevIO.Api.Configuration;
+
+public static class DependencyInjectionConfig
 {
-    public static class DependencyInjectionConfig
+    public static IServiceCollection ResolveDependencies(this IServiceCollection services)
     {
-        public static IServiceCollection ResolveDependencies(this IServiceCollection services)
-        {
-            services.AddScoped<MeuDbContext>();
-            services.AddScoped<IProdutoRepository, ProdutoRepository>();
-            services.AddScoped<IFornecedorRepository, FornecedorRepository>();
-            services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+        services.AddScoped<MeuDbContext>();
 
-            services.AddScoped<INotificador, Notificador>();
-            services.AddScoped<IFornecedorService, FornecedorService>();
-            services.AddScoped<IProdutoService, ProdutoService>();
+        services.AddScoped<IFornecedorRepository, FornecedorRepository>();
+        services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+        services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
-            return services;
-        }
+        services.AddScoped<IFornecedorService, FornecedorService>();
+        services.AddScoped<IProdutoService, ProdutoService>();
+
+        services.AddScoped<INotificador, Notificador>();
+
+        return services;
     }
 }
