@@ -17,7 +17,8 @@ public class ProdutosController : MainController
     public ProdutosController(INotificador notificador,
                               IProdutoRepository produtoReposioRepository,
                               IProdutoService produtoService,
-                              IMapper mapper) : base(notificador)
+                              IMapper mapper,
+                              IUser user) : base(notificador, user)
     {
         _produtoRepository = produtoReposioRepository;
         _produtoService = produtoService;
