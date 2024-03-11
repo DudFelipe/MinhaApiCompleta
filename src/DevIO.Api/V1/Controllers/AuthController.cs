@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using DevIO.Api.Controllers;
 using DevIO.Api.Extensions;
 using DevIO.Api.ViewModels;
 using DevIO.Business.Intefaces;
@@ -9,9 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace DevIO.Api.Controllers;
+namespace DevIO.Api.V1.Controllers;
 
-[Route("api/")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}")]
 public class AuthController : MainController
 {
     private readonly SignInManager<IdentityUser> _signInManager; //Responsável por cuidar do login do usuario
@@ -20,7 +22,7 @@ public class AuthController : MainController
 
     public AuthController(INotificador notificador,
         SignInManager<IdentityUser> signInManager,
-        UserManager<IdentityUser> userManager, 
+        UserManager<IdentityUser> userManager,
         IOptions<AppSettings> appSettings,
         IUser user) : base(notificador, user)
     {
@@ -119,7 +121,7 @@ public class AuthController : MainController
             {
                 Id = user.Id,
                 Email = user.Email,
-                Claims = claims.Select(c => new ClaimViewModel{ Type = c.Type, Value = c.Value})
+                Claims = claims.Select(c => new ClaimViewModel { Type = c.Type, Value = c.Value })
             }
         };
 

@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
+using DevIO.Api.Controllers;
 using DevIO.Api.ViewModels;
 using DevIO.Business.Intefaces;
 using DevIO.Business.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace DevIO.Api.Controllers;
+namespace DevIO.Api.V1.Controllers;
 
-[Route("api/produtos")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/produtos")]
 public class ProdutosController : MainController
 {
     private readonly IProdutoRepository _produtoRepository;
@@ -47,7 +49,7 @@ public class ProdutosController : MainController
         if (!ModelState.IsValid) return CustomResponse(ModelState);
 
         var imagemNome = Guid.NewGuid() + "_" + produtoViewModel.Imagem;
-        if (!UploadArquivo(produtoViewModel.ImagemUpload, imagemNome)) 
+        if (!UploadArquivo(produtoViewModel.ImagemUpload, imagemNome))
             return CustomResponse(produtoViewModel);
 
         produtoViewModel.Imagem = imagemNome;
@@ -83,13 +85,13 @@ public class ProdutosController : MainController
         var produtoAtualizacao = await ObterProduto(id);
         produtoViewModel.Imagem = produtoAtualizacao.Imagem;
 
-        if(!ModelState.IsValid) return CustomResponse(ModelState);
+        if (!ModelState.IsValid) return CustomResponse(ModelState);
 
         if (produtoViewModel.ImagemUpload != null)
         {
             var imgPrefixo = Guid.NewGuid() + "_";
 
-            if (! await UploadAlternativo(produtoViewModel.ImagemUpload, imgPrefixo)) return CustomResponse(ModelState);
+            if (!await UploadAlternativo(produtoViewModel.ImagemUpload, imgPrefixo)) return CustomResponse(ModelState);
 
             produtoAtualizacao.Imagem = imgPrefixo + produtoViewModel.ImagemUpload.FileName;
         }
@@ -109,7 +111,7 @@ public class ProdutosController : MainController
     {
         var produto = await ObterProduto(id);
 
-        if(produto == null) return NotFound();
+        if (produto == null) return NotFound();
 
         await _produtoService.Remover(id);
 

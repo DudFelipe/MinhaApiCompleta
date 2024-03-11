@@ -12,7 +12,6 @@
     },
     "https": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "api/fornecedores",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -20,12 +19,19 @@
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7005;http://localhost:5169"
     },
-    "IIS Express": {
+    "IIS - DEV": {
       "commandName": "IISExpress",
+      "launchUrl": "api/fornecedores",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "launchUrl": "api/fornecedores"
+      }
+    },
+    "IIS - PROD": {
+      "commandName": "IISExpress",
+      "launchUrl": "api/fornecedores",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json",

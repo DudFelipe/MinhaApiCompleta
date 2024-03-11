@@ -14,7 +14,7 @@ namespace DevIO.Api.Controllers
         protected Guid UsuarioId { get; set; }
         protected bool UsuarioAutenticado { get; set; }
 
-        protected MainController(INotificador notificador, 
+        protected MainController(INotificador notificador,
                                  IUser appUser)
         {
             _notificador = notificador;
@@ -52,8 +52,8 @@ namespace DevIO.Api.Controllers
 
         protected ActionResult CustomResponse(ModelStateDictionary modelState)
         {
-            if(!modelState.IsValid) NotificarErroModelInvalida(modelState);
-            
+            if (!modelState.IsValid) NotificarErroModelInvalida(modelState);
+
             return CustomResponse();
         }
 
