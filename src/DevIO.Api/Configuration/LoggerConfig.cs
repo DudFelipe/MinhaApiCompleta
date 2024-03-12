@@ -8,8 +8,8 @@ namespace DevIO.Api.Configuration
         {
             services.AddElmahIo(o =>
             {
-                o.ApiKey = "a5a14fd8e590415cb57419c5f775cec1";
-                o.LogId = new Guid("7265e39f-db14-48fc-a80c-2e573084ad91");
+                o.ApiKey = "API_KEY";
+                o.LogId = new Guid("LOG_ID");
             });
 
             //Configurando o elmah.io como provider para os logs do asp.net
@@ -17,8 +17,8 @@ namespace DevIO.Api.Configuration
             //{
             //    builder.AddElmahIo(o =>
             //    {
-            //        o.ApiKey = "a5a14fd8e590415cb57419c5f775cec1";
-            //        o.LogId = new Guid("7265e39f-db14-48fc-a80c-2e573084ad91");
+            //        o.ApiKey = "API_KEY";
+            //        o.LogId = new Guid("LOG_ID");
             //    });
 
             //    builder.AddFilter<ElmahIoLoggerProvider>(null, LogLevel.Warning);
