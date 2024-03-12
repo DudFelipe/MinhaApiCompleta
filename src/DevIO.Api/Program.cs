@@ -1,5 +1,6 @@
 using DevIO.Api.Configuration;
 using DevIO.Api.Data;
+using DevIO.Api.Extensions;
 using DevIO.Data.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +32,8 @@ builder.Services.Configure<ApiBehaviorOptions>(options => //Desabilitando a vali
 
 builder.Services.AddIdentityConfig(builder.Configuration);
 
+builder.Services.AddLogginConfiguration();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -40,9 +43,13 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseMiddleware<ExceptionMiddleware>();
+
 app.MapControllers();
 
 var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 app.UseSwaggerConfig(provider);
+
+app.UseLoggingConfiguration();
 
 app.Run();

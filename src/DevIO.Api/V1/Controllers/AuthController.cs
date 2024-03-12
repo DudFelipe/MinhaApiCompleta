@@ -19,16 +19,19 @@ public class AuthController : MainController
     private readonly SignInManager<IdentityUser> _signInManager; //Responsável por cuidar do login do usuario
     private readonly UserManager<IdentityUser> _userManager; //Responsável por cuidar da criação do usuário
     private readonly AppSettings _appSettings;
+    private readonly ILogger _logger;
 
     public AuthController(INotificador notificador,
         SignInManager<IdentityUser> signInManager,
         UserManager<IdentityUser> userManager,
         IOptions<AppSettings> appSettings,
-        IUser user) : base(notificador, user)
+        IUser user,
+        ILogger<AuthController> logger) : base(notificador, user)
     {
         _signInManager = signInManager;
         _userManager = userManager;
         _appSettings = appSettings.Value;
+        _logger = logger;
     }
 
     [HttpPost("nova-conta")]
@@ -66,7 +69,11 @@ public class AuthController : MainController
 
         var result = await _signInManager.PasswordSignInAsync(loginUser.Email, loginUser.Password, false, true);
 
-        if (result.Succeeded) return CustomResponse(await GerarJwt(loginUser.Email));
+        if (result.Succeeded)
+        {
+            _logger.LogInformation($"Usuário {loginUser.Email} logado com sucesso");
+            return CustomResponse(await GerarJwt(loginUser.Email));
+        }
 
         if (result.IsLockedOut)
         {

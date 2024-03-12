@@ -3,7 +3,7 @@
     "http": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/fornecedores",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -12,7 +12,7 @@
     },
     "https": {
       "commandName": "Project",
-      "launchUrl": "api/fornecedores",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -21,14 +21,14 @@
     },
     "IIS - DEV": {
       "commandName": "IISExpress",
-      "launchUrl": "api/fornecedores",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
     "IIS - PROD": {
       "commandName": "IISExpress",
-      "launchUrl": "api/fornecedores",
+      "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
       }
