@@ -3,11 +3,13 @@ using DevIO.Api.Controllers;
 using DevIO.Api.ViewModels;
 using DevIO.Business.Intefaces;
 using DevIO.Business.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace DevIO.Api.V1.Controllers;
 
+[Authorize]
 [ApiVersion("1.0")]
 [Route("api/v{version:apiVersion}/produtos")]
 public class ProdutosController : MainController
